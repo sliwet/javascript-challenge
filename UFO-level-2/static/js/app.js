@@ -7,12 +7,10 @@ var setAttrs = (whattoset,attrs) => {
 var filters = d3.select("#filters");
 
 var labels = ["city","state","country","shape"];
-var placeholdertexts = ["aspen","co","us","chevron"];
 
-var attrbs = []
-for(var i = 0;i< labels.length;i++){
-    attrbs.push({"class":"form-control","id":labels[i],"type":"text","placeholder":placeholdertexts[i]});
-}
+var attrbs = labels.map( label => {
+    return {"class":"form-control","id":label,"type":"text","placeholder":""};
+});
 
 for(var i = 0;i<labels.length;i++){
     var li = filters.append("li");
@@ -34,8 +32,11 @@ var getMatchingRecords = (dt,flts) => {
     var records = []
     data.forEach((datum) => {
         var mdy2 = new Date(datum.datetime);
-        if ((+mdy2 === +mdy1) && (flts[0] === datum.city) && (flts[1] === datum.state) 
-        && (flts[2] === datum.country) && (flts[3] === datum.shape) ){
+        if ((+mdy2 === +mdy1) 
+        && ((flts[0] === datum.city.toLowerCase()) || (flts[0] === ""))
+        && ((flts[1] === datum.state.toLowerCase()) || (flts[1] === ""))
+        && ((flts[2] === datum.country.toLowerCase()) || (flts[2] === ""))
+        && ((flts[3] === datum.shape.toLowerCase()) || (flts[3] === ""))){
             records.push(datum);
         }
     });
@@ -58,7 +59,7 @@ var button = d3.select("#filter-btn");
 
 var handleInput = () => {
     var flts = labels.map(label =>{
-        return d3.select(`#${label}`).property("value");
+        return d3.select(`#${label}`).property("value").toLowerCase();
     });
     dt = d3.select("#datetime").property("value");
     updateTable(getMatchingRecords(dt,flts));
