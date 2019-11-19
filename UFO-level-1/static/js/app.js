@@ -9,7 +9,7 @@ function getMatchingRecords(dt) {
     var records = []
     data.forEach((datum) => {
         var mdy2 = new Date(datum.datetime);
-        if ((+mdy2 === +mdy1) || (dt === "")) {
+        if ((mdy2.getTime() === mdy1.getTime()) || (dt === "")) {
             records.push(datum);
         }
     });
