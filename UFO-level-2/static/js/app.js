@@ -32,7 +32,7 @@ var getMatchingRecords = (dt,flts) => {
     var records = []
     data.forEach((datum) => {
         var mdy2 = new Date(datum.datetime);
-        if ((+mdy2 === +mdy1) 
+        if (((+mdy2 === +mdy1) || (dt === ""))
         && ((flts[0] === datum.city.toLowerCase()) || (flts[0] === ""))
         && ((flts[1] === datum.state.toLowerCase()) || (flts[1] === ""))
         && ((flts[2] === datum.country.toLowerCase()) || (flts[2] === ""))

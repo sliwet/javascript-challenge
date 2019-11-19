@@ -1,15 +1,15 @@
 
 var tbody = d3.select("tbody");
 
-function getMatchingRecords(mdy) {
-    var mdy1 = new Date(mdy);
+function getMatchingRecords(dt) {
+    var mdy1 = new Date(dt);
     // console.log(mdy1.getMonth());
     // console.log(mdy1.getDate());
     // console.log(mdy1.getFullYear());
     var records = []
     data.forEach((datum) => {
         var mdy2 = new Date(datum.datetime);
-        if (+mdy2 === +mdy1) {
+        if ((+mdy2 === +mdy1) || (dt === "")) {
             records.push(datum);
         }
     });
